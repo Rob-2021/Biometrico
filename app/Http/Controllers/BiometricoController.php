@@ -11,18 +11,27 @@ class BiometricoController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $zk = new ZKTeco('10.1.71.6');
-        //$zk = new ZKTeco('10.250.13.79');
         $registros = [];
+        $fecha = $request->input('fecha');
+        $mes = $request->input('mes');
         try {
             if ($zk->connect()) {
-                // Obtener solo los registros de hoy
-                if (method_exists($zk, 'getTodaysRecords')) {
-                    $registros = $zk::getTodaysRecords($zk);
+                $attendanceLog = $zk->getAttendance();
+
+                // Filtrar por fecha o mes
+                if ($fecha) {
+                    $registros = array_filter($attendanceLog, function($record) use ($fecha) {
+                        return isset($record['timestamp']) && substr($record['timestamp'], 0, 10) === $fecha;
+                    });
+                } elseif ($mes) {
+                    $registros = array_filter($attendanceLog, function($record) use ($mes) {
+                        return isset($record['timestamp']) && substr($record['timestamp'], 0, 7) === $mes;
+                    });
                 } else {
-                    $attendanceLog = $zk->getAttendance();
+                    // Por defecto, mostrar los de hoy
                     $todayDate = date('Y-m-d');
                     $registros = array_filter($attendanceLog, function($record) use ($todayDate) {
                         return isset($record['timestamp']) && substr($record['timestamp'], 0, 10) === $todayDate;
@@ -33,7 +42,7 @@ class BiometricoController extends Controller
         } catch (\Exception $e) {
             $registros = [];
         }
-        return view('biometrico.index', compact('registros'));
+        return view('biometrico.index', compact('registros', 'fecha', 'mes'));
     }
 
     /**

@@ -11,6 +11,7 @@ use Livewire\Volt\Volt;
 //Route::redirect('/', '/biometrico');
 
 Route::get('biometrico', [BiometricoController::class, 'index'])->name('biometrico.index');
+Route::get('asistencia', [BiometricoController::class, 'index'])->name('asistencia.index');
 //Route::resource('biometrico', BiometricoController::class)->only(['index']);
 
 

@@ -19,6 +19,13 @@ class BiometricoController extends Controller
         $mes = $request->input('mes');
         try {
             if ($zk->connect()) {
+                $usuarios = $zk->getUser();
+                $usuariosPorId = [];
+                foreach ($usuarios as $usuario) {
+                    $idKey = (string)trim($usuario['userid']);
+                    $usuariosPorId[$idKey] = $usuario['name'];
+                }
+
                 $attendanceLog = $zk->getAttendance();
 
                 // Filtrar por fecha o mes
@@ -37,11 +44,19 @@ class BiometricoController extends Controller
                         return isset($record['timestamp']) && substr($record['timestamp'], 0, 10) === $todayDate;
                     });
                 }
+
+                // Asociar nombre al registro y reindexar el array
+                $registros = array_map(function($registro) use ($usuariosPorId) {
+                    $idKey = (string)trim($registro['id']);
+                    $registro['nombre'] = $usuariosPorId[$idKey] ?? '';
+                    return $registro;
+                }, array_values($registros));
                 $zk->disconnect();
             }
         } catch (\Exception $e) {
             $registros = [];
         }
+        //dd($registros);
         return view('biometrico.index', compact('registros', 'fecha', 'mes'));
     }
 
@@ -108,6 +123,7 @@ class BiometricoController extends Controller
         } catch (\Exception $e) {
             $usuarios = [];
         }
+        //dd($usuarios);
         return view('biometrico.usuarios', compact('usuarios'));
     }
 }

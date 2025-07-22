@@ -23,6 +23,7 @@
             <thead>
                 <tr>
                     <th class="px-4 py-2 border">ID Usuario</th>
+                    <th class="px-4 py-2 border">Nombre</th>
                     <th class="px-4 py-2 border">ID Registro</th>
                     <th class="px-4 py-2 border">Fecha y Hora</th>
                     <th class="px-4 py-2 border">Estado</th>
@@ -33,6 +34,7 @@
                 @forelse($registros as $registro)
                     <tr>
                         <td class="px-4 py-2 border">{{ $registro['id'] ?? '' }}</td>
+                        <td class="px-4 py-2 border">{{ $registro['nombre'] ?? '' }}</td>
                         <td class="px-4 py-2 border">{{ $registro['uid'] ?? '' }}</td>
                         <td class="px-4 py-2 border">{{ $registro['timestamp'] ?? '' }}</td>
                         <td class="px-4 py-2 border">{{ $registro['state'] ?? '' }}</td>

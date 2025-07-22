@@ -14,7 +14,10 @@
         <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Buscar</button>
         <a href="{{ route('asistencia.index') }}" class="ml-2 text-blue-600 underline">Limpiar</a>
     </form>
-    <h2 class="text-xl font-semibold mt-8 mb-4">Registros de Asistencia</h2>
+    <div class="flex justify-between items-center mt-8 mb-4">
+        <h2 class="text-xl font-semibold">Registros de Asistencia</h2>
+        <a href="{{ route('usuarios.index') }}" class="bg-green-600 text-white px-4 py-2 rounded">Ver Usuarios</a>
+    </div>
     <div class="overflow-x-auto">
         <table class="min-w-full bg-white border border-gray-200">
             <thead>

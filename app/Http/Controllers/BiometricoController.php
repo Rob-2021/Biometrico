@@ -92,4 +92,22 @@ class BiometricoController extends Controller
     {
         //
     }
+
+    /**
+     * Mostrar todos los usuarios del dispositivo.
+     */
+    public function usuarios()
+    {
+        $zk = new ZKTeco('10.1.71.6');
+        $usuarios = [];
+        try {
+            if ($zk->connect()) {
+                $usuarios = $zk->getUser();
+                $zk->disconnect();
+            }
+        } catch (\Exception $e) {
+            $usuarios = [];
+        }
+        return view('biometrico.usuarios', compact('usuarios'));
+    }
 }

@@ -14,6 +14,8 @@
         <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Buscar</button>
         <a href="{{ route('asistencia.index') }}" class="ml-2 text-blue-600 underline">Limpiar</a>
     </form>
+    <label class="block text-lg font-semibold mb-2">Dispositivo asociado</label>
+    <a href="{{ route('dispositivos.index') }}" class="mb-4 inline-block bg-indigo-600 text-white px-4 py-2 rounded">Ver información del dispositivo</a>
     <div class="flex justify-between items-center mt-8 mb-4">
         <h2 class="text-xl font-semibold">Registros de Asistencia</h2>
         <a href="{{ route('usuarios.index') }}" class="bg-green-600 text-white px-4 py-2 rounded">Ver Usuarios</a>

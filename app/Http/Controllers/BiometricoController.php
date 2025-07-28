@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use Jmrashed\Zkteco\Lib\ZKTeco;
 
 class BiometricoController extends Controller

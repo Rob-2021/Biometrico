@@ -27,6 +27,7 @@
                         <th class="px-4 py-2 border">Fecha Registro</th>
                         <th class="px-4 py-2 border">Edificio SICAU</th>
                         <th class="px-4 py-2 border">Estado</th>
+                        <th class="px-4 py-2 border">Acción</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -41,6 +42,13 @@
                             <td class="px-4 py-2 border">{{ $dispositivo->FechaHoraRegistro }}</td>
                             <td class="px-4 py-2 border">{{ $dispositivo->CodigoEdificioSICAU }}</td>
                             <td class="px-4 py-2 border">{{ $dispositivo->Estado }}</td>
+                            <td class="px-4 py-2 border">
+                                <form method="POST" action="{{ route('dispositivos.index') }}" style="display:inline">
+                                    @csrf
+                                    <input type="hidden" name="ip" value="{{ $dispositivo->IPAddress }}">
+                                    <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition">Conectar</button>
+                                </form>
+                            </td>
                         </tr>
                     @empty
                         <tr>

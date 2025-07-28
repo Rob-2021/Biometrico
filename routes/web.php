@@ -18,7 +18,7 @@ Route::get('usuarios', [BiometricoController::class, 'usuarios'])->name('usuario
 // Route::get('dispositivo', [BiometricoController::class, 'dispositivo'])->name('dispositivo.index');
 //Route::resource('biometrico', BiometricoController::class)->only(['index']);
 
-Route::get('dispositivos', [DispositivoController::class, 'index'])->name('dispositivos.index');
+Route::match(['get', 'post'], 'dispositivos', [DispositivoController::class, 'index'])->name('dispositivos.index');
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])

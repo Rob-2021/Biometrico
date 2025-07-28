@@ -14,7 +14,16 @@
         <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Buscar</button>
         <button type="button" onclick="window.location='{{ route('asistencia.index') }}'" class="ml-2 bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400 transition">Limpiar</button>
     </form>
-    <label class="block text-lg font-semibold mb-2">Dispositivo asociado</label>
+    <div class="flex items-center gap-4 mb-2">
+        <label class="block text-lg font-semibold">Dispositivo asociado: {{ session('ip_biometrico', '10.1.71.6') }}</label>
+        @if(session('ip_biometrico'))
+            <form method="POST" action="{{ route('dispositivos.index') }}">
+                @csrf
+                <input type="hidden" name="desconectar" value="1">
+                <button type="submit" class="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 transition">Desconectar</button>
+            </form>
+        @endif
+    </div>
     <a href="{{ route('dispositivos.index') }}" class="mb-4 inline-block bg-indigo-600 text-white px-4 py-2 rounded">Ver información del dispositivo</a>
     <div class="flex justify-between items-center mt-8 mb-4">
         <h2 class="text-xl font-semibold">Registros de Asistencia</h2>

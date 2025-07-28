@@ -9,6 +9,20 @@ class DispositivoController extends Controller
 {
     public function index(Request $request)
     {
+        if ($request->isMethod('post')) {
+            if ($request->has('desconectar')) {
+                session()->forget('ip_biometrico');
+                return redirect()->route('biometrico.index');
+            }
+            $ip = $request->input('ip', '10.1.71.6');
+            $existe = Dispositivo::where('IPAddress', $ip)->exists();
+            if ($existe) {
+                session(['ip_biometrico' => $ip]);
+            } else {
+                session()->forget('ip_biometrico');
+            }
+            return redirect()->route('biometrico.index');
+        }
         $query = Dispositivo::query();
         $busqueda = $request->input('busqueda');
         if ($busqueda) {

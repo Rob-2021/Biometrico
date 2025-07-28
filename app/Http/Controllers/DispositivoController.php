@@ -7,9 +7,17 @@ use Illuminate\Http\Request;
 
 class DispositivoController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $dispositivos = Dispositivo::orderByDesc('IdDispositivo')->limit(1000)->get();
-        return view('biometrico.dispositivo', compact('dispositivos'));
+        $query = Dispositivo::query();
+        $busqueda = $request->input('busqueda');
+        if ($busqueda) {
+            $query->where(function ($q) use ($busqueda) {
+                $q->where('IPAddress', 'like', "%$busqueda%")
+                    ->orWhere('Descripcion', 'like', "%$busqueda%");
+            });
+        }
+        $dispositivos = $query->orderByDesc('IdDispositivo')->paginate(20)->withQueryString();
+        return view('biometrico.dispositivo', compact('dispositivos', 'busqueda'));
     }
 }

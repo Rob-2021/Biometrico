@@ -2,6 +2,18 @@
     <div class="container mx-auto">
         <h1 class="text-2xl font-bold mb-4">Información del Dispositivo</h1>
         <a href="{{ route('asistencia.index') }}" class="mb-4 inline-block bg-blue-600 text-white px-4 py-2 rounded">Volver a Asistencias</a>
+
+        <form method="GET" class="mb-6 flex flex-wrap gap-4 items-end">
+            <div>
+                <label for="busqueda" class="block text-sm font-medium">Buscar por IP o Descripción:</label>
+                <input type="text" id="busqueda" name="busqueda" value="{{ request('busqueda', $busqueda ?? '') }}" class="border rounded px-2 py-1" placeholder="Buscar...">
+            </div>
+            <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded">Buscar</button>
+            @if(request('busqueda'))
+                <button type="button" onclick="window.location='{{ route('dispositivos.index') }}'" class="ml-2 bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400 transition">Limpiar</button>
+            @endif
+        </form>
+
         <div class="overflow-x-auto">
             <table class="min-w-full bg-white border border-gray-200">
                 <thead>
@@ -37,6 +49,9 @@
                     @endforelse
                 </tbody>
             </table>
+        </div>
+        <div class="mt-4">
+            {{ $dispositivos->links() }}
         </div>
     </div>
 </x-layouts.public>
